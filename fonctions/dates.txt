@@ -1,0 +1,107 @@
+// =====================================
+// GESTION DES DATES EN JAVA - CODE COMMENTÉ
+// =====================================
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+// =====================================
+// 1. java.util.Date (ANCIENNE API)
+// =====================================
+
+Date currentDate = new Date();          // crée un objet Date avec la date actuelle
+long timestamp = currentDate.getTime(); // récupère le timestamp (ms depuis 01/01/1970)
+
+currentDate.setTime(timestamp + 86400000); // ajoute 1 jour (en millisecondes)
+
+// =====================================
+// 2. FORMATAGE AVEC SimpleDateFormat
+// =====================================
+
+SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+String formattedDate = sdf.format(currentDate); // formate la date
+System.out.println(formattedDate);
+
+// =====================================
+// 3. java.time.LocalDate / LocalTime / LocalDateTime (JAVA 8+)
+// =====================================
+
+LocalDate today = LocalDate.now();              // date actuelle (sans heure)
+LocalTime nowTime = LocalTime.now();            // heure actuelle
+LocalDateTime nowDateTime = LocalDateTime.now();// date + heure actuelles
+
+// =====================================
+// 4. CRÉATION DE DATES SPÉCIFIQUES
+// =====================================
+
+LocalDate date1 = LocalDate.of(2023, Month.DECEMBER, 25); // 25 décembre 2023
+LocalTime time1 = LocalTime.of(22, 15);                  // 22h15
+LocalDateTime dateTime1 = LocalDateTime.of(2023, 12, 25, 22, 15);
+
+// =====================================
+// 5. EXTRACTION DES COMPOSANTS
+// =====================================
+
+int year = nowDateTime.getYear();
+Month month = nowDateTime.getMonth();
+int day = nowDateTime.getDayOfMonth();
+int hour = nowDateTime.getHour();
+int minute = nowDateTime.getMinute();
+int second = nowDateTime.getSecond();
+
+// =====================================
+// 6. MODIFICATION D'UNE DATE
+// =====================================
+
+LocalDateTime modifiedDate = nowDateTime
+.withYear(2024)
+.withMonth(1)
+.withDayOfMonth(1);
+
+// =====================================
+// 7. AJOUT / RETRAIT DE TEMPS (ChronoUnit)
+// =====================================
+
+LocalDateTime ref = LocalDateTime.of(2018, Month.DECEMBER, 25, 13, 37);
+
+ref.plus(1, ChronoUnit.WEEKS);    // +1 semaine
+ref.plus(2, ChronoUnit.MONTHS);   // +2 mois
+ref.plus(3, ChronoUnit.YEARS);    // +3 ans
+ref.plus(4, ChronoUnit.HOURS);    // +4 heures
+ref.minus(5, ChronoUnit.SECONDS);// -5 secondes
+ref.minusMinutes(38);             // -38 minutes
+
+// =====================================
+// 8. FORMATAGE AVEC DateTimeFormatter
+// =====================================
+
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+String formatted = nowDateTime.format(formatter);
+System.out.println(formatted);
+
+// =====================================
+// 9. PARSING DE DATE À PARTIR D'UNE CHAÎNE
+// =====================================
+
+LocalTime parsedTime = LocalTime.parse("20:15:30");
+LocalDate parsedDate = LocalDate.parse("2023-12-25");
+
+// =====================================
+// 10. COMPARAISON DE DATES
+// =====================================
+
+LocalDate d1 = LocalDate.of(2023, 1, 1);
+LocalDate d2 = LocalDate.of(2024, 1, 1);
+
+d1.isBefore(d2);   // true si d1 est avant d2
+d1.isAfter(d2);    // true si d1 est après d2
+d1.isEqual(d2);    // true si dates égales
+
+// =====================================
+// 11. DIFFÉRENCE ENTRE DEUX DATES
+// =====================================
+
+long daysBetween = ChronoUnit.DAYS.between(d1, d2); // nombre de jours entre deux dates

@@ -1,0 +1,110 @@
+// =====================================
+// GESTION DES FICHIERS EN JAVA - CODE COMMENTÉ
+// =====================================
+
+import java.io.*;
+
+// =====================================
+// 1. CRÉATION D'UN FICHIER
+// =====================================
+
+String filePath = "example.txt";
+
+try {
+File file = new File(filePath);          // crée un objet File
+if (file.createNewFile()) {              // crée le fichier physiquement
+System.out.println("Fichier créé");
+} else {
+System.out.println("Fichier déjà existant");
+}
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 2. LECTURE D'UN FICHIER TEXTE (FileReader)
+// =====================================
+
+try (FileReader fr = new FileReader("example.txt")) {
+int c;
+while ((c = fr.read()) != -1) {          // lit caractère par caractère
+System.out.print((char) c);
+}
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 3. LECTURE D'UN FICHIER TEXTE (BufferedReader)
+// =====================================
+
+try (BufferedReader br = new BufferedReader(new FileReader("example.txt"))) {
+String line;
+while ((line = br.readLine()) != null) { // lit ligne par ligne
+System.out.println(line);
+}
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 4. ÉCRITURE DANS UN FICHIER TEXTE (FileWriter)
+// =====================================
+
+try (FileWriter fw = new FileWriter("example.txt")) {
+fw.write("Bonjour Java\n");             // écrit dans le fichier
+fw.write("Gestion des fichiers");
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 5. ÉCRITURE AVEC BUFFER (BufferedWriter)
+// =====================================
+
+try (BufferedWriter bw = new BufferedWriter(new FileWriter("example.txt", true))) {
+bw.write("Nouvelle ligne");              // écrit dans le fichier
+bw.newLine();                             // ajoute un retour à la ligne
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 6. LECTURE D'UN FICHIER BINAIRE (InputStream)
+// =====================================
+
+try (InputStream is = new FileInputStream("file.bin")) {
+int b;
+while ((b = is.read()) != -1) {           // lit octet par octet
+System.out.print(b + " ");
+}
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 7. ÉCRITURE DANS UN FICHIER BINAIRE (OutputStream)
+// =====================================
+
+try (OutputStream os = new FileOutputStream("file.bin")) {
+byte[] data = {65, 66, 67, 68};            // données binaires (A B C D)
+os.write(data);                           // écrit les octets
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 8. SUPPRESSION D'UN FICHIER
+// =====================================
+
+File fileToDelete = new File("example.txt");
+
+if (fileToDelete.exists()) {                  // vérifie si le fichier existe
+if (fileToDelete.delete()) {               // supprime le fichier
+System.out.println("Fichier supprimé");
+} else {
+System.out.println("Suppression échouée");
+}
+} else {
+System.out.println("Fichier introuvable");
+}

@@ -1,0 +1,120 @@
+// =====================================
+// GESTION DES EXCEPTIONS EN JAVA - CODE COMMENTÉ
+// =====================================
+
+import java.io.*;
+import java.util.*;
+
+// =====================================
+// 1. TRY / CATCH SIMPLE
+// =====================================
+
+try {
+int a = 10 / 0;                 // génère ArithmeticException
+} catch (ArithmeticException e) {
+System.out.println(e.getMessage()); // affiche le message d'erreur
+}
+
+// =====================================
+// 2. TRY / CATCH / FINALLY
+// =====================================
+
+try {
+int[] t = new int[2];
+System.out.println(t[5]);       // génère ArrayIndexOutOfBoundsException
+} catch (ArrayIndexOutOfBoundsException e) {
+System.out.println("Erreur d'index");
+} finally {
+System.out.println("Bloc exécuté dans tous les cas");
+}
+
+// =====================================
+// 3. PLUSIEURS CATCH
+// =====================================
+
+try {
+String s = null;
+s.length();                     // NullPointerException
+} catch (NullPointerException e) {
+System.out.println("Objet null");
+} catch (Exception e) {
+System.out.println("Exception générale");
+}
+
+// =====================================
+// 4. TRY AVEC RESSOURCES (AUTO-CLOSE)
+// =====================================
+
+try (BufferedReader br = new BufferedReader(new FileReader("test.txt"))) {
+System.out.println(br.readLine());
+} catch (IOException e) {
+e.printStackTrace();
+}
+
+// =====================================
+// 5. THROWS (PROPAGATION D'EXCEPTION)
+// =====================================
+
+public void lireFichier() throws IOException {
+FileReader fr = new FileReader("test.txt"); // IOException possible
+}
+
+// =====================================
+// 6. THROW (LEVÉE MANUELLE D'EXCEPTION)
+// =====================================
+
+public void verifierAge(int age) {
+if (age < 0) {
+throw new IllegalArgumentException("Age négatif");
+}
+}
+
+// =====================================
+// 7. EXCEPTION PERSONNALISÉE
+// =====================================
+
+class AgeNonValideException extends Exception {
+@Override
+public String toString() {
+return "Exception : âge non valide";
+}
+}
+
+// =====================================
+// 8. UTILISATION D'UNE EXCEPTION PERSONNALISÉE
+// =====================================
+
+class Personne {
+private int age;
+
+```
+public void setAge(int age) throws AgeNonValideException {
+    if (age < 0 || age > 150) {
+        throw new AgeNonValideException(); // levée de l'exception
+    }
+    this.age = age;
+}
+```
+
+}
+
+// =====================================
+// 9. TRAITEMENT DE L'EXCEPTION PERSONNALISÉE
+// =====================================
+
+public class Main {
+public static void main(String[] args) {
+Personne p = new Personne();
+
+```
+    try {
+        p.setAge(235);           // déclenche l'exception
+    } catch (AgeNonValideException e) {
+        System.out.println(e);  // affiche le message personnalisé
+    }
+
+    System.out.println("Fin du programme");
+}
+```
+
+}

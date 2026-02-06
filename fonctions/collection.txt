@@ -1,0 +1,136 @@
+// ===============================
+// COLLECTIONS EN JAVA - CODE COMMENTÉ
+// ===============================
+
+// ===============================
+// 1. DÉCLARATION DES COLLECTIONS
+// ===============================
+
+import java.util.*;
+
+// List : collection ordonnée, accepte les doublons
+List<String> list = new ArrayList<>();
+
+// Set : collection non ordonnée, n'accepte pas les doublons
+Set<String> set = new HashSet<>();
+
+// Map : association clé / valeur
+Map<String, Integer> map = new HashMap<>();
+
+// ===============================
+// 2. MÉTHODES DE BASE (Collection)
+// ===============================
+
+list.add("Java");              // ajoute un élément
+list.remove("Java");           // supprime un élément
+list.size();                    // retourne le nombre d'éléments
+list.isEmpty();                 // teste si la collection est vide
+list.contains("Java");         // teste si un élément existe
+list.clear();                   // vide la collection
+Object[] array = list.toArray(); // convertit en tableau
+
+// ===============================
+// 3. MÉTHODES SPÉCIFIQUES À LIST
+// ===============================
+
+list.add("A");
+list.add("B");
+list.add("C");
+
+list.add(1, "D");              // insère à l'index 1
+list.get(0);                    // récupère l'élément à l'index 0
+list.set(1, "E");              // remplace l'élément à l'index 1
+list.remove(2);                 // supprime l'élément à l'index 2
+list.indexOf("E");              // retourne l'index de l'élément
+
+// ===============================
+// 4. PARCOURS D'UNE LIST
+// ===============================
+
+// Boucle for-each
+for (String s : list) {
+System.out.println(s);
+}
+
+// Boucle for classique
+for (int i = 0; i < list.size(); i++) {
+System.out.println(list.get(i));
+}
+
+// ===============================
+// 5. TRI AVEC Comparable
+// ===============================
+
+class Personne implements Comparable<Personne> {
+String nom;
+int age;
+
+```
+Personne(String nom, int age) {
+    this.nom = nom;
+    this.age = age;
+}
+
+@Override
+public int compareTo(Personne p) {
+    return this.age - p.age; // tri croissant par âge
+}
+```
+
+}
+
+List<Personne> personnes = new ArrayList<>();
+personnes.add(new Personne("Ali", 30));
+personnes.add(new Personne("Sara", 20));
+
+Collections.sort(personnes);    // tri selon compareTo
+
+// ===============================
+// 6. TRI AVEC Comparator (classe anonyme)
+// ===============================
+
+Collections.sort(personnes, new Comparator<Personne>() {
+public int compare(Personne p1, Personne p2) {
+return p1.age - p2.age;
+}
+});
+
+// ===============================
+// 7. TRI AVEC Comparator (lambda)
+// ===============================
+
+Collections.sort(personnes, (p1, p2) -> p1.age - p2.age);
+
+// ===============================
+// 8. MAP - MÉTHODES DE BASE
+// ===============================
+
+map.put("A", 10);               // ajoute une paire clé/valeur
+map.put("B", 20);
+map.get("A");                   // retourne la valeur associée à la clé
+map.remove("B");                // supprime une entrée
+
+// ===============================
+// 9. PARCOURS D'UNE MAP
+// ===============================
+
+// Parcours des valeurs
+for (Integer v : map.values()) {
+System.out.println(v);
+}
+
+// Parcours des clés
+for (String k : map.keySet()) {
+System.out.println(k + " -> " + map.get(k));
+}
+
+// ===============================
+// 10. ITERATOR
+// ===============================
+
+Iterator<String> it = list.iterator();
+
+while (it.hasNext()) {
+String value = it.next();
+System.out.println(value);
+}
